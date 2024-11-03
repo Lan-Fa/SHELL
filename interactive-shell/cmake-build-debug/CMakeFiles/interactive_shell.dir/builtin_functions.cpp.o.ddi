@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/interactive_shell.dir/builtin_functions.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

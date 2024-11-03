@@ -1,0 +1,3 @@
+/home/ruan/develop/SHELL/touch/cmake-build-debug/CMakeFiles/touch.dir
+/home/ruan/develop/SHELL/touch/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ruan/develop/SHELL/touch/cmake-build-debug/CMakeFiles/rebuild_cache.dir

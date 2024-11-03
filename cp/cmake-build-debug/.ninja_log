@@ -1,0 +1,7 @@
+# ninja log v6
+1	45	1730549589547696311	CMakeFiles/cp.dir/main.cpp.o.ddi	2002844fbf218522
+49	237	1730549589597697244	CMakeFiles/cp.dir/main.cpp.o	ac9d10e06cba07c6
+45	49	1730549589591030452	CMakeFiles/cp.dir/CXX.dd	16028153c88a4568
+45	49	1730549589591030452	/home/ruan/develop/SHELL/cp/cmake-build-debug/CMakeFiles/cp.dir/CXXModules.json	16028153c88a4568
+45	49	1730549589591030452	CMakeFiles/cp.dir/main.cpp.o.modmap	16028153c88a4568
+237	267	1730549589787700789	cp	db9c956bcd45f3f4

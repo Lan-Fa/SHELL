@@ -1,0 +1,15 @@
+# ninja log v6
+1	40	1730550171598381666	CMakeFiles/mv.dir/main.cpp.o.ddi	9c306ee4a6b68e2e
+40	44	1730550171645049180	CMakeFiles/mv.dir/CXX.dd	9838199d12eadd1a
+40	44	1730550171645049180	/home/ruan/develop/SHELL/mv/cmake-build-debug/CMakeFiles/mv.dir/CXXModules.json	9838199d12eadd1a
+40	44	1730550171645049180	CMakeFiles/mv.dir/main.cpp.o.modmap	9838199d12eadd1a
+1	49	1730550190285387473	CMakeFiles/mv.dir/main.cpp.o.ddi	9c306ee4a6b68e2e
+50	53	1730550190335388380	CMakeFiles/mv.dir/CXX.dd	9838199d12eadd1a
+50	53	1730550190335388380	/home/ruan/develop/SHELL/mv/cmake-build-debug/CMakeFiles/mv.dir/CXXModules.json	9838199d12eadd1a
+50	53	1730550190335388380	CMakeFiles/mv.dir/main.cpp.o.modmap	9838199d12eadd1a
+1	40	1730550205548997700	CMakeFiles/mv.dir/main.cpp.o.ddi	9c306ee4a6b68e2e
+40	43	1730550205588998426	CMakeFiles/mv.dir/CXX.dd	9838199d12eadd1a
+40	43	1730550205588998426	/home/ruan/develop/SHELL/mv/cmake-build-debug/CMakeFiles/mv.dir/CXXModules.json	9838199d12eadd1a
+40	43	1730550205588998426	CMakeFiles/mv.dir/main.cpp.o.modmap	9838199d12eadd1a
+43	229	1730550205592331820	CMakeFiles/mv.dir/main.cpp.o	c3ad56da93b104d7
+229	279	1730550205779001872	mv	d4c96f68e42cf4f

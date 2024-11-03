@@ -1,0 +1,7 @@
+# ninja log v6
+0	44	1730560703303028541	CMakeFiles/echo.dir/main.cpp.o.ddi	e995dc5b3728d85c
+44	49	1730560703353029225	CMakeFiles/echo.dir/CXX.dd	299605141e77df9a
+44	49	1730560703353029225	/home/ruan/develop/SHELL/echo/cmake-build-debug/CMakeFiles/echo.dir/CXXModules.json	299605141e77df9a
+44	49	1730560703353029225	CMakeFiles/echo.dir/main.cpp.o.modmap	299605141e77df9a
+49	222	1730560703353029225	CMakeFiles/echo.dir/main.cpp.o	4dc98fcbf516b999
+222	256	1730560703526364929	echo	203e1cd58d6bb93a

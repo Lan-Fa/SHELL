@@ -1,0 +1,3 @@
+/home/ruan/develop/SHELL/ls/cmake-build-debug/CMakeFiles/ls.dir
+/home/ruan/develop/SHELL/ls/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ruan/develop/SHELL/ls/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,20 @@
+# ninja log v6
+2	53	1730554428142026872	CMakeFiles/interactive_shell.dir/builtin_functions.cpp.o.ddi	6599a8d8d548f067
+53	57	1730554428195361145	CMakeFiles/interactive_shell.dir/builtin_functions.cpp.o.modmap	449cd077fcd8e75
+2	49	1730532187828472604	CMakeFiles/interactive_shell.dir/path_info.cpp.o.ddi	191ce28195fe0a29
+53	57	1730554428195361145	/home/ruan/develop/SHELL/interactive-shell/cmake-build-debug/CMakeFiles/interactive_shell.dir/CXXModules.json	449cd077fcd8e75
+2	53	1730554428142026872	CMakeFiles/interactive_shell.dir/main.cpp.o.ddi	471f3d528657e145
+1	14	1730560320660770228	build.ninja	87c717784bd5c101
+48	51	1730532387258778242	CMakeFiles/interactive_shell.dir/path_info.cpp.o.modmap	3e614e864fa6e23c
+1	36	1730553396170319281	CMakeFiles/interactive_shell.dir/command.cpp.o.ddi	3418654fc9a98afb
+53	57	1730554428195361145	CMakeFiles/interactive_shell.dir/main.cpp.o.modmap	449cd077fcd8e75
+2	42	1730554378307815701	CMakeFiles/interactive_shell.dir/pathinfo.cpp.o.ddi	20a942ffe21a3000
+57	440	1730554428198694536	CMakeFiles/interactive_shell.dir/builtin_functions.cpp.o	69d84c0fa73dc08b
+57	375	1730554428198694536	CMakeFiles/interactive_shell.dir/main.cpp.o	5e1d38f8b676460c
+53	57	1730554428195361145	CMakeFiles/interactive_shell.dir/pathinfo.cpp.o.modmap	449cd077fcd8e75
+58	311	1730532187881806853	CMakeFiles/interactive_shell.dir/path_info.cpp.o	f61eb1b092b05a1e
+53	57	1730554428195361145	CMakeFiles/interactive_shell.dir/CXX.dd	449cd077fcd8e75
+46	304	1730554378354483190	CMakeFiles/interactive_shell.dir/pathinfo.cpp.o	b7f70cd665b6b860
+440	478	1730554428582034621	interactive_shell	8ab9440279c1416e
+56	291	1730553396226986978	CMakeFiles/interactive_shell.dir/command.cpp.o	cdad43cd18315d6b
+53	57	1730554428195361145	CMakeFiles/interactive_shell.dir/command.cpp.o.modmap	449cd077fcd8e75
