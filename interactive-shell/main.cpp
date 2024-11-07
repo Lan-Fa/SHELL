@@ -19,13 +19,13 @@ void SIGINT_Handler(const int signum)
     }
 }
 
-inline void init()
+void init()
 {
     builtin_clear();
     signal(SIGINT, SIGINT_Handler);
 }
 
-inline void exec_command(const std::vector<Command>& commands)
+void exec_command(const std::vector<Command>& commands)
 {
     std::vector<Command> shell_commands;
     std::vector<Command> builtin_commands;
@@ -45,7 +45,8 @@ inline void exec_command(const std::vector<Command>& commands)
     exec_shell_command(shell_commands);
 }
 
-int main()
+int
+main()
 {
     init();
 

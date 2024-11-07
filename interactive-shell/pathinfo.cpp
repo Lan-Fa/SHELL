@@ -12,8 +12,10 @@
 PathInfo::PathInfo()
 {
     refreshCwd();
-    const std::string d_path = "/home/ruan/develop/SHELL/test_path";
-    default_paths.emplace_back(d_path.c_str());
+    std::string d_path = "/home/ruan/develop/SHELL/SHELL_PATH";
+    PATH.emplace_back(d_path.c_str());
+    d_path = "/usr/bin";
+    PATH.emplace_back(d_path.c_str());
 }
 
 void PathInfo::refreshCwd()
@@ -36,5 +38,5 @@ void PathInfo::setPath(const char* path)
 
 std::vector<std::string> PathInfo::getDefaultPaths()
 {
-    return this->default_paths;
+    return this->PATH;
 }

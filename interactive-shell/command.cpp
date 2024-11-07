@@ -77,7 +77,7 @@ bool Command::operator==(const Command& other) const
     return this->command == other.command && this->args == other.args;
 }
 
-std::size_t CommandHash::operator()(const Command& cmd) const
+size_t CommandHash::operator()(const Command& cmd) const
 {
     std::size_t hashValue = std::hash<std::string>()(cmd.get_command());
     for (const auto& arg : cmd.get_args())

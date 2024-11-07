@@ -205,8 +205,8 @@ void exec_shell_command(const std::vector<Command>& commands)
                 close(fd);
             }
 
-            std::string t_path = commands_path[commands[i]];
-            std::vector<std::string> args = commands[i].get_args();
+            const std::string t_path = commands_path[commands[i]];
+            const std::vector<std::string> args = commands[i].get_args();
             std::vector<char*> exec_args(args.size() + 2);
 
             exec_args[0] = const_cast<char*>(t_path.c_str());
@@ -239,7 +239,7 @@ void exec_shell_command(const std::vector<Command>& commands)
         wait(&status);
         if (WIFEXITED(status))
         {
-            // std::cout << "Command exited with status: " << WEXITSTATUS(status) << std::endl;
+            // std::cout << "TEST::" << WEXITSTATUS(status) << std::endl;
         }
     }
 

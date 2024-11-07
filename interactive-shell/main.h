@@ -32,8 +32,8 @@ inline std::unordered_map<Command, std::string, CommandHash> commands_path;
 
 void SIGINT_Handler(int signum);
 
-inline void init();
+void init();
 
-inline void exec_command(const std::vector<Command>& commands);
+void exec_command(const std::vector<Command>& commands);
 
 #endif //MAIN_H

@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.29)
 project(interactive_shell)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 20 -fsanitize=address)
 
-# 查找 readline 库
 find_library(READLINE_LIBRARIES NAMES readline)
 find_path(READLINE_INCLUDE_DIR NAMES readline/readline.h)
 

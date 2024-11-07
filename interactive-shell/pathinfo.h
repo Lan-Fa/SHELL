@@ -20,7 +20,7 @@ public:
 
 private:
     char cwd[PATH_MAX]{};
-    std::vector<std::string> default_paths;
+    std::vector<std::string> PATH;
 };
 
 #endif //PATH_INFO_H
