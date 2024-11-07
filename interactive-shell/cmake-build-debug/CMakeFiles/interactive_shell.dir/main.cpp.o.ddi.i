@@ -60620,7 +60620,7 @@ private:
             4096
 # 22 "/home/ruan/develop/SHELL/interactive-shell/pathinfo.h"
                     ]{};
-    std::vector<std::string> default_paths;
+    std::vector<std::string> PATH;
 };
 # 13 "/home/ruan/develop/SHELL/interactive-shell/main.h" 2
 
@@ -60653,9 +60653,9 @@ inline std::unordered_map<Command, std::string, CommandHash> commands_path;
 
 void SIGINT_Handler(int signum);
 
-inline void init();
+void init();
 
-inline void exec_command(const std::vector<Command>& commands);
+void exec_command(const std::vector<Command>& commands);
 # 12 "/home/ruan/develop/SHELL/interactive-shell/main.cpp" 2
 # 1 "/home/ruan/develop/SHELL/interactive-shell/builtin_functions.h" 1
 # 10 "/home/ruan/develop/SHELL/interactive-shell/builtin_functions.h"
@@ -60698,7 +60698,7 @@ void SIGINT_Handler(const int signum)
     }
 }
 
-inline void init()
+void init()
 {
     builtin_clear();
     signal(
@@ -60708,7 +60708,7 @@ inline void init()
                 , SIGINT_Handler);
 }
 
-inline void exec_command(const std::vector<Command>& commands)
+void exec_command(const std::vector<Command>& commands)
 {
     std::vector<Command> shell_commands;
     std::vector<Command> builtin_commands;
@@ -60728,7 +60728,8 @@ inline void exec_command(const std::vector<Command>& commands)
     exec_shell_command(shell_commands);
 }
 
-int main()
+int
+main()
 {
     init();
 

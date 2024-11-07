@@ -45190,7 +45190,7 @@ private:
             4096
 # 22 "/home/ruan/develop/SHELL/interactive-shell/pathinfo.h"
                     ]{};
-    std::vector<std::string> default_paths;
+    std::vector<std::string> PATH;
 };
 # 13 "/home/ruan/develop/SHELL/interactive-shell/main.h" 2
 
@@ -45223,9 +45223,9 @@ inline std::unordered_map<Command, std::string, CommandHash> commands_path;
 
 void SIGINT_Handler(int signum);
 
-inline void init();
+void init();
 
-inline void exec_command(const std::vector<Command>& commands);
+void exec_command(const std::vector<Command>& commands);
 # 9 "/home/ruan/develop/SHELL/interactive-shell/builtin_functions.h" 2
 
 template <typename T>
@@ -59735,8 +59735,8 @@ void exec_shell_command(const std::vector<Command>& commands)
                 close(fd);
             }
 
-            std::string t_path = commands_path[commands[i]];
-            std::vector<std::string> args = commands[i].get_args();
+            const std::string t_path = commands_path[commands[i]];
+            const std::vector<std::string> args = commands[i].get_args();
             std::vector<char*> exec_args(args.size() + 2);
 
             exec_args[0] = const_cast<char*>(t_path.c_str());
