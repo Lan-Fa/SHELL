@@ -6,8 +6,14 @@
 #define MAIN_H
 #include <string>
 
+#define INF 0x7FFFFFFF
+
 inline int exit_code = 0;
 
-inline void exec_ls(const std::string& path);
+inline bool long_listing_format = false;
+
+std::string change_to_human_read(size_t size);
+
+void exec_ls(const std::string& path);
 
 #endif //MAIN_H
