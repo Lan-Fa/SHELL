@@ -17,7 +17,7 @@
 
 std::string change_to_human_read(size_t size)
 {
-    // TODO: fill the func
+    // TODO: complete the func
     return "";
 }
 
