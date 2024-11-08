@@ -1,7 +1,0 @@
-# ninja log v6
-0	40	1730523177373195752	CMakeFiles/mkdir.dir/main.cpp.o.ddi	392cf04d7aa6b35e
-40	43	1730523177413196375	CMakeFiles/mkdir.dir/CXX.dd	9d27b357d47c8cae
-40	43	1730523177413196375	/home/ruan/develop/SHELL/mkdir/cmake-build-debug/CMakeFiles/mkdir.dir/CXXModules.json	9d27b357d47c8cae
-40	43	1730523177413196375	CMakeFiles/mkdir.dir/main.cpp.o.modmap	9d27b357d47c8cae
-44	247	1730523177416529760	CMakeFiles/mkdir.dir/main.cpp.o	6d222f8da98a98ee
-247	275	1730523177619866264	mkdir	f26e48ae32ac9542

@@ -1,7 +1,0 @@
-# ninja log v6
-0	40	1730522088608907136	CMakeFiles/touch.dir/main.cpp.o.ddi	a4766aa7bd2410ec
-40	44	1730522088648908563	CMakeFiles/touch.dir/CXX.dd	3b87f7c452e80964
-44	254	1730522088652242015	CMakeFiles/touch.dir/main.cpp.o	b2cc140470985abc
-40	44	1730522088648908563	/home/ruan/develop/SHELL/touch/cmake-build-debug/CMakeFiles/touch.dir/CXXModules.json	3b87f7c452e80964
-254	284	1730522088862249504	touch	51e809066f6ed5c5
-40	44	1730522088648908563	CMakeFiles/touch.dir/main.cpp.o.modmap	3b87f7c452e80964

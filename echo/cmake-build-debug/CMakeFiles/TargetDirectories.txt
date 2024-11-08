@@ -1,3 +1,0 @@
-/home/ruan/develop/SHELL/echo/cmake-build-debug/CMakeFiles/echo.dir
-/home/ruan/develop/SHELL/echo/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ruan/develop/SHELL/echo/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,9 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles/interactive_shell.dir/main.cpp.o: dyndep
-
-build CMakeFiles/interactive_shell.dir/builtin_functions.cpp.o: dyndep
-
-build CMakeFiles/interactive_shell.dir/pathinfo.cpp.o: dyndep
-
-build CMakeFiles/interactive_shell.dir/command.cpp.o: dyndep
-
