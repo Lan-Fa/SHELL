@@ -3,8 +3,12 @@
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 
 #include "main.h"
+
+#include <fstream>
+#include <vector>
 
 void init()
 {
@@ -22,7 +26,7 @@ void init()
     tcsetattr(STDIN_FILENO, TCSANOW, &term); // 立即应用设置
 }
 
-void reset_terminal_mode()
+void reset()
 {
     struct termios term;
     tcgetattr(STDIN_FILENO, &term);
@@ -30,17 +34,60 @@ void reset_terminal_mode()
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-void exec_less(const char* path)
+void display(int l, int r, const std::vector<std::string>& file_content)
+{
+    for(int i = l; i < r; i++) std::cout << file_content[i] << std::endl;
+    for(int i = r - l; i < ws.ws_row - 1; i++) std::cout << std::endl;
+}
+
+void exec_less(std::istream& file)
 {
     init();
-    if (!read_from_stdin) freopen(path, "r", stdin);
-    char c;
-    while (std::cin >> c)
+    std::vector<std::string> file_content;
+    for(int i = 0; i < ws.ws_row - 1; i++)
     {
-        if (c == 'q') break;
-        std::cout << c << std::endl;
+        std::string buf;
+        if(!std::getline(file, buf)) break;;
+        file_content.push_back(buf);
     }
-    reset_terminal_mode();
+    int l = 0, r = std::min(static_cast<int>(ws.ws_row), static_cast<int>(file_content.size()));
+    display(l, r, file_content);
+    char op;
+    std::string buf;
+    unsigned max_row = 0x7FFFFFFF;
+    while (true)
+    {
+        std::cout << (r == max_row ? "\033[7m(END)\033[0m" : ":");
+        if(!(std::cin >> op)) break;
+        if(op == 'q')
+        {
+            break;
+        }
+        std::cout << std::endl;
+        switch(op)
+        {
+        case 'k':
+            if(l > 0)
+            {
+                l = std::max(l - 1, 0);
+                r = std::max(r - 1, static_cast<int>(ws.ws_row) - 1);
+            }
+            break;
+        case 'j':
+            if(std::getline(file, buf)) file_content.push_back(buf);
+            else max_row = file_content.size();
+            l = std::min(l + 1, static_cast<int>(file_content.size() - ws.ws_row) + 1);
+            r = std::min(r + 1, static_cast<int>(file_content.size()));
+            break;
+        case 'g':
+            l = 0, r = std::min(static_cast<int>(ws.ws_row) - 1, static_cast<int>(file_content.size()));
+            break;
+        default:
+            break;
+        }
+        display(l, r, file_content);
+    }
+    reset();
 }
 
 
@@ -48,84 +95,19 @@ int main(const int argc, const char** argv)
 {
     if (isatty(STDIN_FILENO)) {
         std::cout << "Input is from terminal" << std::endl;
+        std::ifstream file;
+        file.open(argv[1]);
+        if(!file.is_open())
+        {
+            std::cerr << "Error opening file." << std::endl;
+        } else
+        {
+            exec_less(file);
+        }
+        file.close();
     } else {
-        std::cout << "Input is from pipe or file" << std::endl;
-    }
-    return 0;
-    if (argc == 2 && strcmp(argv[1], "-stdin") == 0)
-    {
-        read_from_stdin = true;
-        exec_less("");
-    }
-    else if (argc == 2)
-    {
-        exec_less(argv[1]);
-    }
-    else
-    {
-        std::cerr << "Usage: " << argv[0] << " <file>" << std::endl;
-        return 1;
+        // std::cout << "Input is from pipe or file" << std::endl;
+        exec_less(std::cin);
     }
     return 0;
 }
-
-
-// #include <iostream>
-// #include <fstream>
-// #include <string>
-// #include <vector>
-//
-// void display_file_page(std::ifstream &file, std::streampos &pos, size_t page_size) {
-//     // 设置文件指针
-//     file.seekg(pos);
-//
-//     // 缓冲区存储当前页的内容
-//     std::vector<std::string> page_lines;
-//     std::string line;
-//     size_t lines_read = 0;
-//
-//     // 读取当前页的内容
-//     while (lines_read < page_size && std::getline(file, line)) {
-//         page_lines.push_back(line);
-//         lines_read++;
-//     }
-//
-//     // 显示当前页内容
-//     for (const auto& ln : page_lines) {
-//         std::cout << ln << std::endl;
-//     }
-//
-//     // 更新文件指针位置
-//     pos = file.tellg();
-// }
-//
-// int main(int argc, char **argv) {
-//     std::ifstream file(argv[1]);
-//     if (!file.is_open()) {
-//         std::cerr << "Error opening file!" << std::endl;
-//         return 1;
-//     }
-//
-//     size_t page_size = 10; // 每次显示20行
-//     std::streampos current_pos = 0;
-//
-//     // 初始读取第一页
-//     display_file_page(file, current_pos, page_size);
-//
-//     // 模拟分页，等待用户输入
-//     char cmd;
-//     while (true) {
-//         std::cout << "Press 'n' for next page, 'q' to quit: ";
-//         std::cin >> cmd;
-//
-//         if (cmd == 'n') {
-//             // 显示下一页
-//             display_file_page(file, current_pos, page_size);
-//         } else if (cmd == 'q') {
-//             break;
-//         }
-//     }
-//
-//     file.close();
-//     return 0;
-// }
