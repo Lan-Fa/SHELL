@@ -7,14 +7,22 @@
 #include <vector>
 #include <sys/ioctl.h>
 
+#define OP_Q 0
+#define OP_J 1
+#define OP_K 2
+#define OP_G 3
+
+#define TERM_INPUT 0
+#define TERM_FILE 1
+
 inline bool read_from_stdin = false;
 
 inline struct winsize ws;
 
-inline void init();
+inline void init(const int fd, const int type);
 
 void display(int l, int r, const std::vector<std::string>& file_content);
 
-void exec_less(std::istream& input_stream, const int tty_fd);
+void exec_less(std::istream& file, const int tty_fd);
 
 #endif //MAIN_H
