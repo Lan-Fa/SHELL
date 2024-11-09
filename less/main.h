@@ -15,6 +15,6 @@ inline void init();
 
 void display(int l, int r, const std::vector<std::string>& file_content);
 
-void exec_less(std::istream& input_stream);
+void exec_less(std::istream& input_stream, const int tty_fd);
 
 #endif //MAIN_H

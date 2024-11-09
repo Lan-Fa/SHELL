@@ -10,7 +10,7 @@
 #include <fstream>
 #include <vector>
 
-void init()
+void init(const int fd)
 {
     if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1)
     {
@@ -19,19 +19,19 @@ void init()
     }
 
     struct termios term;
-    tcgetattr(STDIN_FILENO, &term); // 获取终端设置
+    tcgetattr(fd, &term); // 获取终端设置
     term.c_lflag &= ~(ICANON | ECHO); // 关闭行缓冲和回显
     term.c_cc[VMIN] = 1; // 设置最小输入字节数为1
     term.c_cc[VTIME] = 0; // 不等待任何时间
-    tcsetattr(STDIN_FILENO, TCSANOW, &term); // 立即应用设置
+    tcsetattr(fd, TCSANOW, &term); // 立即应用设置
 }
 
-void reset()
+void reset(const int fd)
 {
     struct termios term;
-    tcgetattr(STDIN_FILENO, &term);
+    tcgetattr(fd, &term);
     term.c_lflag |= (ICANON | ECHO); // 恢复行缓冲和回显
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    tcsetattr(fd, TCSANOW, &term);
 }
 
 void display(int l, int r, const std::vector<std::string>& file_content)
@@ -40,9 +40,9 @@ void display(int l, int r, const std::vector<std::string>& file_content)
     for(int i = r - l; i < ws.ws_row - 1; i++) std::cout << std::endl;
 }
 
-void exec_less(std::istream& file)
+void exec_less(std::istream& file, const int tty_fd)
 {
-    init();
+    init(tty_fd == -1 ? STDIN_FILENO : tty_fd);
     std::vector<std::string> file_content;
     for(int i = 0; i < ws.ws_row - 1; i++)
     {
@@ -55,9 +55,14 @@ void exec_less(std::istream& file)
     char op;
     std::string buf;
     unsigned max_row = 0x7FFFFFFF;
+    const int pipe_fd = dup(STDIN_FILENO);
     while (true)
     {
         std::cout << (r == max_row ? "\033[7m(END)\033[0m" : ":");
+        if(tty_fd != -1)
+        {
+            dup2(tty_fd, STDIN_FILENO);
+        }
         if(!(std::cin >> op)) break;
         if(op == 'q')
         {
@@ -74,6 +79,7 @@ void exec_less(std::istream& file)
             }
             break;
         case 'j':
+            dup2(pipe_fd, STDIN_FILENO);
             if(std::getline(file, buf)) file_content.push_back(buf);
             else max_row = file_content.size();
             l = std::min(l + 1, static_cast<int>(file_content.size() - ws.ws_row) + 1);
@@ -87,7 +93,7 @@ void exec_less(std::istream& file)
         }
         display(l, r, file_content);
     }
-    reset();
+    reset(tty_fd == -1 ? STDIN_FILENO : tty_fd);
 }
 
 
@@ -102,12 +108,18 @@ int main(const int argc, const char** argv)
             std::cerr << "Error opening file." << std::endl;
         } else
         {
-            exec_less(file);
+            exec_less(file, -1);
         }
         file.close();
     } else {
         // std::cout << "Input is from pipe or file" << std::endl;
-        exec_less(std::cin);
+        const int tty_fd = open("/dev/tty", O_RDWR);
+        if(tty_fd == -1)
+        {
+            perror("open");
+            return 1;
+        }
+        exec_less(std::cin, tty_fd);
     }
     return 0;
 }
