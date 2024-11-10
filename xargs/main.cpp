@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <vector>
 #include <sys/wait.h>
+#include <cstring>
 
 void exec_command(const std::string& command, const std::vector<std::string>& args)
 {
@@ -40,11 +41,27 @@ int main(const int argc, char** argv)
         exit(1);
     }
 
-    const std::string command = argv[1];
+    std::string command;
+    char delimiter = 0;
+    if(argc == 4 && strcmp(argv[1], "-d") == 0)
+    {
+        delimiter = argv[2][0];
+        command = argv[3];
+    } else
+    {
+        command = argv[1];
+    }
+
     std::vector<std::string> args;
     std::string tmp_arg;
 
-    while(std::cin >> tmp_arg) args.push_back(tmp_arg);
+    if(delimiter == 0)
+    {
+        while(std::cin >> tmp_arg) args.push_back(tmp_arg);
+    } else
+    {
+        while(std::getline(std::cin, tmp_arg, delimiter)) args.push_back(tmp_arg);
+    }
 
     exec_command(command, args);
 
