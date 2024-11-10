@@ -65,6 +65,20 @@ void builtin_exit()
     exit(0);
 }
 
+void builtin_export(const std::string& context)
+{
+    std::istringstream iss(context);
+    std::string key, value;
+    getline(iss, key, '=');
+    getline(iss, value, '=');
+    if(value[0] != '\"' || value[value.size() - 1] != '\"')
+    {
+        builtin_error("Error adding " + key);
+        return;
+    }
+    pi.addEnv(key, value.substr(1, value.size() - 2));
+}
+
 
 std::string exec_builtin_command(const Command& command)
 {
@@ -136,6 +150,9 @@ std::string exec_builtin_command(const Command& command)
     else if (cmd == "pwd")
     {
         builtin_pwd();
+    } else if(cmd == "export")
+    {
+        builtin_export(command.get_args()[0]);
     }
 
     dup2(ORIGINAL_INPUT, STDIN_FILENO);
@@ -251,16 +268,18 @@ void exec_shell_command(const std::vector<Command>& commands)
 bool find_builtin_function(const Command& command)
 {
     const std::string cmd = command.get_command();
-    return cmd == "pwd" || cmd == "cd" || cmd == "echo" || cmd == "exit" || cmd == "clear";
+    return cmd == "pwd" || cmd == "cd" || cmd == "echo" || cmd == "exit" || cmd == "clear" || cmd == "export";
 }
 
 bool find_shell_function(const Command& command)
 {
     if (commands_path.contains(command)) return true;
-    const std::vector<std::string> paths = pi.getDefaultPaths();
     struct stat buffer{};
+    std::string paths = pi.getEnv("PATH").first;
+    std::istringstream parse_path_stream(paths);
 
-    for (const std::string& path : paths)
+    std::string path;
+    while(getline(parse_path_stream, path, ':'))
     {
         std::string t_path = path + "/" + command.get_command();
         if (stat(t_path.c_str(), &buffer)) continue;
@@ -270,5 +289,6 @@ bool find_shell_function(const Command& command)
             return true;
         }
     }
+
     return false;
 }

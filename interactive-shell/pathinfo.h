@@ -5,7 +5,7 @@
 #ifndef PATH_INFO_H
 #define PATH_INFO_H
 #include <string>
-#include <vector>
+#include <unordered_map>
 #include <linux/limits.h>
 
 class PathInfo
@@ -15,12 +15,13 @@ public:
 
     void refreshCwd();
     [[nodiscard]] char* getPath();
-    [[nodiscard]] std::vector<std::string> getDefaultPaths();
+    [[nodiscard]] std::pair<std::string, bool> getEnv(const std::string& key);
+    void addEnv(const std::string& key, const std::string& value);
     void setPath(const char* path);
 
 private:
     char cwd[PATH_MAX]{};
-    std::vector<std::string> PATH;
+    std::unordered_map<std::string, std::string> env;
 };
 
 #endif //PATH_INFO_H

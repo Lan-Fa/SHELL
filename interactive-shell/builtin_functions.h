@@ -25,6 +25,8 @@ void builtin_pwd();
 
 void builtin_exit();
 
+void builtin_export(const std::string& context);
+
 bool find_builtin_function(const Command& command);
 
 bool find_shell_function(const Command& command);

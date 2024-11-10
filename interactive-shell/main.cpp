@@ -95,6 +95,10 @@ main()
                     cmd.set_output_file(output_file);
                 } else
                 {
+                    if(tmp_str[0] == '$')
+                    {
+                        tmp_str = pi.getEnv(tmp_str.substr(1)).first;
+                    }
                     cmd.add_arg(tmp_str);
                 }
             }

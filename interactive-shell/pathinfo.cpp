@@ -13,14 +13,14 @@ PathInfo::PathInfo()
 {
     refreshCwd();
     std::string d_path = "/home/ruan/develop/SHELL/SHELL_PATH";
-    PATH.emplace_back(d_path.c_str());
-    d_path = "/usr/bin";
-    PATH.emplace_back(d_path.c_str());
+    this->env["PATH"] = d_path;
+    d_path = ":/usr/bin";
+    this->env["PATH"].append(d_path);
 }
 
 void PathInfo::refreshCwd()
 {
-    if (getcwd(cwd, sizeof(cwd)) == nullptr)
+    if (getcwd(this->cwd, sizeof(this->cwd)) == nullptr)
     {
         std::cerr << "Get current path error" << std::endl;
     }
@@ -28,15 +28,22 @@ void PathInfo::refreshCwd()
 
 char* PathInfo::getPath()
 {
-    return cwd;
+    return this->cwd;
 }
 
 void PathInfo::setPath(const char* path)
 {
-    strcpy(cwd, path);
+    strcpy(this->cwd, path);
 }
 
-std::vector<std::string> PathInfo::getDefaultPaths()
+std::pair<std::string, bool> PathInfo::getEnv(const std::string& key)
 {
-    return this->PATH;
+    return this->env.contains(key) ?
+        std::make_pair(env[key], true) : std::make_pair("", false);
 }
+
+void PathInfo::addEnv(const std::string& key, const std::string& value)
+{
+    this->env[key] = value;
+}
+
