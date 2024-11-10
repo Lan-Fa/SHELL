@@ -19,10 +19,12 @@ inline bool read_from_stdin = false;
 
 inline struct winsize ws;
 
-inline void init(const int fd, const int type);
+void init(int fd, int type);
+
+void reset(int fd);
 
 void display(int l, int r, const std::vector<std::string>& file_content);
 
-void exec_less(std::istream& file, const int tty_fd);
+void exec_less(std::istream& file, int tty_fd);
 
 #endif //MAIN_H

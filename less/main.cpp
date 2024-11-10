@@ -19,7 +19,7 @@ void init(const int fd, const int type)
         return;
     }
 
-    struct termios term;
+    struct termios term{};
     tcgetattr(fd, &term); // 获取终端设置
     if(type == TERM_INPUT)
     {
@@ -32,13 +32,13 @@ void init(const int fd, const int type)
 
 void reset(const int fd)
 {
-    struct termios term;
+    struct termios term{};
     tcgetattr(fd, &term);
     term.c_lflag |= (ICANON | ECHO); // 恢复行缓冲和回显
     tcsetattr(fd, TCSANOW, &term);
 }
 
-void display(int l, int r, const std::vector<std::string>& file_content)
+void display(const int l, const int r, const std::vector<std::string>& file_content)
 {
     for (int i = l; i < r; i++) std::cout << file_content[i] << std::endl;
     for (int i = r - l; i < ws.ws_row - 1; i++) std::cout << std::endl;
@@ -56,7 +56,6 @@ void exec_less(std::istream& file, const int tty_fd)
     }
     int l = 0, r = std::min(static_cast<int>(ws.ws_row), static_cast<int>(file_content.size()));
     display(l, r, file_content);
-
     std::string buf;
     unsigned max_row = 0x7FFFFFFF;
     while (true)
@@ -66,17 +65,17 @@ void exec_less(std::istream& file, const int tty_fd)
         {
             if (tty_fd != -1)
             {
-                dup2(tty_fd, STDIN_FILENO);
+                freopen("/dev/tty", "r", stdin);
+                // dup2(tty_fd, STDIN_FILENO);
             }
             char op;
             std::cout << (r == max_row ? "\033[7m(END)\033[0m" : ":");
             init(tty_fd == -1 ? STDIN_FILENO : tty_fd, TERM_INPUT);
-            if (!(std::cin >> op))
+            if ((op = getchar()) == EOF)
             {
                 reset(tty_fd == -1 ? STDIN_FILENO : tty_fd);
                 exit(OP_Q);
             }
-            std::cout << "INFO:: " << op << std::endl;
             std::cout << std::endl;
             reset(tty_fd == -1 ? STDIN_FILENO : tty_fd);
             switch (op)
@@ -90,14 +89,13 @@ void exec_less(std::istream& file, const int tty_fd)
             case 'g':
                 exit(OP_G);
             default:
-                break;
+                exit(-1);
             }
         }
         else if (pid > 0)
         {
             int res;
             wait(&res);
-            std::cout << "RES:: " << WEXITSTATUS(res) << std::endl;
             switch (WEXITSTATUS(res))
             {
             case OP_Q:
@@ -113,6 +111,7 @@ void exec_less(std::istream& file, const int tty_fd)
                 if (std::getline(file, buf)) file_content.push_back(buf);
                 else max_row = file_content.size();
                 l = std::min(l + 1, static_cast<int>(file_content.size() - ws.ws_row) + 1);
+                l = std::max(l, 0);
                 r = std::min(r + 1, static_cast<int>(file_content.size()));
                 break;
             case OP_G:
@@ -123,7 +122,6 @@ void exec_less(std::istream& file, const int tty_fd)
             }
             display(l, r, file_content);
         }
-        // return;
     }
 }
 
@@ -132,7 +130,11 @@ int main(const int argc, const char** argv)
 {
     if (isatty(STDIN_FILENO))
     {
-        std::cout << "Input is from terminal" << std::endl;
+        if(argc < 2)
+        {
+            std::cerr << "Usage: " << argv[0] << " <file>" << std::endl;
+            return -1;
+        }
         std::ifstream file;
         file.open(argv[1]);
         if (!file.is_open())
@@ -147,7 +149,6 @@ int main(const int argc, const char** argv)
     }
     else
     {
-        // std::cout << "Input is from pipe or file" << std::endl;
         const int tty_fd = open("/dev/tty", O_RDWR);
         if (tty_fd == -1)
         {
