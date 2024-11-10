@@ -38,12 +38,10 @@ void PathInfo::setPath(const char* path)
 
 std::pair<std::string, bool> PathInfo::getEnv(const std::string& key)
 {
-    return this->env.contains(key) ?
-        std::make_pair(env[key], true) : std::make_pair("", false);
+    return this->env.contains(key) ? std::make_pair(env[key], true) : std::make_pair("", false);
 }
 
 void PathInfo::addEnv(const std::string& key, const std::string& value)
 {
     this->env[key] = value;
 }
-

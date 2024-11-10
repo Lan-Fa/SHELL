@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <unistd.h>
+#include <ctime>
 
 #include "command.h"
 #include "pathinfo.h"
@@ -19,12 +20,14 @@ inline bool skip = false;
 
 inline PathInfo pi;
 
+inline char* username;
+
+inline char hostname[256];
+
+inline char time_str[100];
+
 const int ORIGINAL_INPUT = dup(STDIN_FILENO);
 const int ORIGINAL_OUTPUT = dup(STDOUT_FILENO);
-
-inline const char* share_memory_name;
-
-inline constexpr size_t share_memory_size = sizeof(PathInfo);
 
 inline std::vector<std::string> commands;
 

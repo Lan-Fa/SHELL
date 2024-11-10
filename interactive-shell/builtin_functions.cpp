@@ -71,7 +71,7 @@ void builtin_export(const std::string& context)
     std::string key, value;
     getline(iss, key, '=');
     getline(iss, value, '=');
-    if(value[0] != '\"' || value[value.size() - 1] != '\"')
+    if (value[0] != '\"' || value[value.size() - 1] != '\"')
     {
         builtin_error("Error adding " + key);
         return;
@@ -150,7 +150,8 @@ std::string exec_builtin_command(const Command& command)
     else if (cmd == "pwd")
     {
         builtin_pwd();
-    } else if(cmd == "export")
+    }
+    else if (cmd == "export")
     {
         builtin_export(command.get_args()[0]);
     }
@@ -279,7 +280,7 @@ bool find_shell_function(const Command& command)
     std::istringstream parse_path_stream(paths);
 
     std::string path;
-    while(getline(parse_path_stream, path, ':'))
+    while (getline(parse_path_stream, path, ':'))
     {
         std::string t_path = path + "/" + command.get_command();
         if (stat(t_path.c_str(), &buffer)) continue;

@@ -22,6 +22,19 @@ void SIGINT_Handler(const int signum)
 void init()
 {
     builtin_clear();
+
+    username = getenv("USER");
+
+    if(gethostname(hostname, sizeof(hostname)) == -1)
+    {
+        perror("gethostname");
+        exit(1);
+    }
+
+    const std::time_t now = std::time(nullptr);
+    const tm* local_time = std::localtime(&now);
+    std::strftime(time_str, sizeof(time_str), "%H:%M", local_time);
+
     signal(SIGINT, SIGINT_Handler);
 }
 
@@ -45,16 +58,22 @@ void exec_command(const std::vector<Command>& commands)
     exec_shell_command(shell_commands);
 }
 
-int
-main()
+int main()
 {
     init();
-
     while (true)
     {
         std::string input;
-        builtin_echo(pi.getPath());
-        input = readline("> ");
+        builtin_echo("["
+            + std::string(username)
+            + "@"
+            + std::string(hostname)
+            + " "
+            + std::string(time_str)
+            + " "
+            + basename(pi.getPath())
+            + "]");
+        input = readline("$ ");
 
         if (std::cin.eof())
         {
@@ -83,19 +102,21 @@ main()
             cmd.set_command(tmp_str);
             while (parse_command_stream >> tmp_str)
             {
-                if(tmp_str == "<")
+                if (tmp_str == "<")
                 {
                     std::string input_file;
                     parse_command_stream >> input_file;
                     cmd.set_input_file(input_file);
-                } else if(tmp_str == ">")
+                }
+                else if (tmp_str == ">")
                 {
                     std::string output_file;
                     parse_command_stream >> output_file;
                     cmd.set_output_file(output_file);
-                } else
+                }
+                else
                 {
-                    if(tmp_str[0] == '$')
+                    if (tmp_str[0] == '$')
                     {
                         tmp_str = pi.getEnv(tmp_str.substr(1)).first;
                     }
